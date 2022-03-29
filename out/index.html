@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><p>This is the documentation for the A-Frame Playwright Utility libraries.</p>
+<p>We recommend that these are included by test scripts as follows:</p>
+<pre class="prettyprint source"><code>const A = require('./src/aframe-pw-utils.js');
+</code></pre>
+<p>Functions can be then used like this:</p>
+<pre class="prettyprint source"><code>controls = A.getTransformControls();
+</code></pre>
+<p>or</p>
+<pre class="prettyprint source"><code>await A.setEntityPosition('#myEntity', 0.75, 1.5, -3)
+</code></pre>
+<p>Many functions need a page context to operate.  Set this up as follows:</p>
+<pre class="prettyprint source"><code>A.setPage(page)
+</code></pre>
+<p>where <code>page</code> is the Playwright page object for the page you wish to use.  This page this then used for all operations until the next call to A.setPage.</p>
+<p>Many functions are async functions.  These should be called with <code>await</code> as per the example above.</p>
+<p>The library includes a range of &quot;page functions&quot;, which can be identified as their names begin with pf.</p>
+<p>These page functions are intended to be executed inside the pages of the application under test, using the playwright <code>evaluate()</code>function.</p>
+<p>In general, these should not be used directly from test scripts, which should make direct calls to the respective top-level scoped wrapper functions.  However documentation of these page functions is useful for those extending these libraries, and there may be rare occasions when it is desirable to use them directly from a test script.</p>
+<h3>Application-specific Library Extensions</h3>
+<p>For any complex application, it's likely that you'll want to extend the library with a range of application-specific functions.</p>
+<p>Recommended approach to this is as follows:</p>
+<ul>
+<li>pick an abbreviation other than &quot;A&quot; for your application-specific extensions.  For example, &quot;X&quot;</li>
+<li>create a module containing your application-specific extensions in the same folder as &quot;aframe-pw-utils&quot;.</li>
+<li>start this module with the following code:</li>
+</ul>
+<pre class="prettyprint source"><code>const { expect } = require('@playwright/test');
+const A = require('./aframe-pw-utils.js');
+
+// Include all A-Frame utils in our exports.
+Object.assign(exports, A);
+const X = exports;
+</code></pre>
+<ul>
+<li>From within this module, you can invoke the base A-Frame Playwright Utility functions like this: <code>A.&lt;function_name&gt;()</code></li>
+<li>From within your scripts, you can invoke any utility function, whether part of the A-Frame library, or your extensions like this: <code>X.&lt;function_name&gt;()</code></li>
+<li>By using jsdoc, you can generate documentation for the full extended API.</li>
+</ul>
+<h3>API Design Guidelines</h3>
+<p>The API conforms as far as possible with the following guidelines.  As far as possible, they should be maintained when extending the library, and we also recommend these guidelines are also followed where possible for application-specific extensions.</p>
+<p>The overall principle here is consistency - which includes internal consistency, and consistency with how Playwright APIs tend to work.</p>
+<p>The keys benefit of this consistency are a lower level of low-level errors (which can be frustratingly time-consuming to diagnose, and less cognitive load when developing test scripts.</p>
+<table>
+<thead>
+<tr>
+<th>Guideline</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Very explicitly distinguish between selectors and element IDs.  Any parameter named entityId or elementId expects a naked element Id (no leading #) and should use A.checkId() to ensure the Id is a naked Id, and not a selector.  This check should be implemented <em>outside</em> of page functions (i.e. in wrapper functions), so that errors are easily spotted in console logs.<br /><br />We strongly considered mandating that selectors are always used over naked ids.  But since we sometimes want to check element IDs, and element ids are stored naked, it's not possible to take that approach and maintain consistency.</td>
+</tr>
+<tr>
+<td>Variables that can take arbitrary selectors are called &quot;selector&quot;, or &quot;xxxSelector&quot; (e.g. targetSelector) when disambiguation is required.</td>
+</tr>
+<tr>
+<td>Variables that only take element IDs are called &quot;elementId&quot; or &quot;entityId&quot;, or &quot;xxxId&quot; for some other xxx when disambiguation is required (e.g. targetId).<br /><br />Where an A-Frame entity is concerned, entityId is better than elementId.  Avoid being over-specific where context already makes the reference clear.</td>
+</tr>
+<tr>
+<td>Functions to read and write data to/from the app are called getX and setX, and X is always the same.<br />X is carefully chosen so that it reads well with both Get &amp; Set.  E.g. &quot;getSliderValue&quot; rather than &quot;getSlider&quot; (the latter could be read as providing a reference to the slider itself, rather than the value).</td>
+</tr>
+<tr>
+<td>Entity = A-Frame Entity.  Don't call these &quot;objects&quot;</td>
+</tr>
+<tr>
+<td>Element = Any DOM element (which could be e.g a 2D React Element or A-Frame Entity or something else).</td>
+</tr>
+<tr>
+<td>Acronyms in CamelCase are rendered like VrGui, not VRGui, VrGui or VRGUI.</td>
+</tr>
+<tr>
+<td>Page Functions are always named pfX.  Where it makes sense, X should closely match a utility function that wraps the page function.  However there will be cases where this doesn't apply.</td>
+</tr>
+<tr>
+<td>Page Functions only take a single parameter.  This is either:<br />- a single named parameter when only one parameter is needed<br />- or a parameter named <code>o</code>, which is an object containing the named parameters, when multiple parameters are needed.</td>
+</tr>
+<tr>
+<td>Page Functions only return a single parameter.    This is either:<br />- a single named parameter when only one parameter is needed<br />- or a parameter named <code>o</code>, which is an object containing the named parameters, when multiple parameters are needed.</td>
+</tr>
+<tr>
+<td>Parameters that have a similar role should always take the same name across all functions.  Always check existing implementations and strive for consistency when implementing a new function.</td>
+</tr>
+<tr>
+<td>All functions are marked with tags for inclusion in JSDoc-generated docs.</td>
+</tr>
+<tr>
+<td>Position, Rotation etc. when unqualified always mean Local Position, Rotation etc.  use WorldPosition etc. for World position.</td>
+</tr>
+</tbody>
+</table></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#checkId">checkId</a></li><li><a href="global.html#color">color</a></li><li><a href="global.html#cursorClick">cursorClick</a></li><li><a href="global.html#cursorMouseEnter">cursorMouseEnter</a></li><li><a href="global.html#cursorMouseLeave">cursorMouseLeave</a></li><li><a href="global.html#enterVR">enterVR</a></li><li><a href="global.html#exitVR">exitVR</a></li><li><a href="global.html#fireCustomEvent">fireCustomEvent</a></li><li><a href="global.html#getEntityAttributeValue">getEntityAttributeValue</a></li><li><a href="global.html#getEntityMaterial">getEntityMaterial</a></li><li><a href="global.html#getEntityPosition">getEntityPosition</a></li><li><a href="global.html#getEntityVisibility">getEntityVisibility</a></li><li><a href="global.html#pfClick">pfClick</a></li><li><a href="global.html#pfCursorMouseEvent">pfCursorMouseEvent</a></li><li><a href="global.html#pfFireCustomEvent">pfFireCustomEvent</a></li><li><a href="global.html#pfGetEntityAttributeValue">pfGetEntityAttributeValue</a></li><li><a href="global.html#pfGetEntityMaterial">pfGetEntityMaterial</a></li><li><a href="global.html#pfgetEntityPosition">pfgetEntityPosition</a></li><li><a href="global.html#pfGetEntityVisibility">pfGetEntityVisibility</a></li><li><a href="global.html#pfPointEntityAt">pfPointEntityAt</a></li><li><a href="global.html#pfSetEntityPosition">pfSetEntityPosition</a></li><li><a href="global.html#pfXrEnterVR">pfXrEnterVR</a></li><li><a href="global.html#pointControllerAt">pointControllerAt</a></li><li><a href="global.html#pointEntityAt">pointEntityAt</a></li><li><a href="global.html#setCursorEntity">setCursorEntity</a></li><li><a href="global.html#setEntityPosition">setEntityPosition</a></li><li><a href="global.html#setPage">setPage</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Tue Mar 29 2022 21:37:09 GMT+0100 (British Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
