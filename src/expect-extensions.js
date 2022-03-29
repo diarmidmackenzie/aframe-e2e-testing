@@ -95,47 +95,42 @@ exports.extendExpect = function() {
   
         // begin with optimism...
         pass = true;
-        if (returnValue) {
-          if (isObject(matchObject)) {
-  
-            Object.entries(matchObject).forEach((entry) => {
-  
-              // exit early if we already determined that the test is not yet passed.
-              if (!pass) return;
-  
-              var match = false;
-              const x = entry[1]
-              const y = returnValue[entry[0]]
-  
-              if (debug) console.log("comparing ", x, " with ", y)
-  
-              // check if we are comparing objects...
-              if (isObject(x)) {
-                if (debug) console.log("Comparing objects")
-                // comparing objects. 
-                match = deepEqual(x, y)            
-              }
-              else {
-                match = (x === y)
-              }
-  
-              if (!match) {
-                pass = false;
-                if (debug) console.log("No match - call function again after a pause")
-              }
-              else {
-                if (debug) console.log("They matched - check the next entries")
-              }
-            })
-          }
-          else {
-            pass = (matchObject === returnValue)
-            if (debug) console.log("Match object is not an object.  Direct comparison returns: ", pass)
-          }
+
+        if (isObject(matchObject)) {
+
+          Object.entries(matchObject).forEach((entry) => {
+
+            // exit early if we already determined that the test is not yet passed.
+            if (!pass) return;
+
+            var match = false;
+            const x = entry[1]
+            const y = returnValue[entry[0]]
+
+            if (debug) console.log("comparing ", x, " with ", y)
+
+            // check if we are comparing objects...
+            if (isObject(x)) {
+              if (debug) console.log("Comparing objects")
+              // comparing objects. 
+              match = deepEqual(x, y)            
+            }
+            else {
+              match = (x === y)
+            }
+
+            if (!match) {
+              pass = false;
+              if (debug) console.log("No match - call function again after a pause")
+            }
+            else {
+              if (debug) console.log("They matched - check the next entries")
+            }
+          })
         }
         else {
-          if (debug) console.log("No return value to compare with - call function again after a pause")
-          pass = false;
+          pass = (matchObject === returnValue)
+          if (debug) console.log("Match object is not an object.  Direct comparison returns: ", pass)
         }
   
         if (pass) {
