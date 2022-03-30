@@ -96,7 +96,7 @@ exports.extendExpect = function() {
         // begin with optimism...
         pass = true;
 
-        if (isObject(matchObject)) {
+        if (isObject(matchObject) && returnValue) {
 
           Object.entries(matchObject).forEach((entry) => {
 
