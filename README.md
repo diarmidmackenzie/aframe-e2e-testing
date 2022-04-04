@@ -1,7 +1,7 @@
 # aframe-e2e-testing
 An end-to-end testing framework for A-Frame, built on Playwright
 
-[![image](https://user-images.githubusercontent.com/16045703/161606777-f3e381f9-311f-477b-a8b0-26b1442f72c6.png)]({https://user-images.githubusercontent.com/16045703/161604672-6f65bfef-4e88-4c33-89c8-d28969784ff8.mp4})
+[![image](https://user-images.githubusercontent.com/16045703/161606777-f3e381f9-311f-477b-a8b0-26b1442f72c6.png)](https://user-images.githubusercontent.com/16045703/161604672-6f65bfef-4e88-4c33-89c8-d28969784ff8.mp4)
 
 ## How to Run Example Tests
 
@@ -45,7 +45,7 @@ You can base your tests on the example tests in the tests folder, in combination
 
 This repository contains a range of utility functions that are specifically helpful for test automation of A-Frame applications.  It also contains guidelines for extensions to this API for either generic or application-specific purposes.
 
-Documentation is published to: http://127.0.0.1:8000/AframeProjects/aframe-e2e/out/
+API Documentation can be found here: https://diarmidmackenzie.github.io/aframe-e2e-testing/out/
 
  
 
