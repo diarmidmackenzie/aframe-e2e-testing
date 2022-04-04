@@ -79,13 +79,15 @@ Checks that a supplied entity identifier is a naked id, and does not begin with 
 
 
 
-`expect(x).toReturn(object, debug, timeout, frequency)`
+`expect(x).toReturn(object, options)`
 
 - x: should be a function that returns an object.  Can be an async function.
 - object: a set of key/value pairs that are expected to be returned by the function.
-- debug (optiona, default: false): output logs to help debug unexpected results.
-- timeout (optional, default: 5000): the number of msecs to wait for the function to return matching values.
-- retry (optional, default: 200), the number of msecs to wait between one call of the function and the next.
+- options: an object containing key/value pairs specifying additional matching options:
+  - debug (default: false): output logs to help debug unexpected results.
+  - timeout (default: 5000): the number of msecs to wait for the function to return matching values.
+  - retry (default: 200), the number of msecs to wait between one call of the function and the next.
+  - dps (default: -1, which implies a perfect match), how many DPs of accuracy to check for.
 
 This function will call the supplied function x repeatedly, based on the retry setting, until it returns all the key/value pairs specified in the object - or until a timeout is reached.
 
