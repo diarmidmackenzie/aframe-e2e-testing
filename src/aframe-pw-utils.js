@@ -234,14 +234,14 @@ A.page = null;
 
   if (viewLogs) { 
     page.on('console', async msg => {
-        console.log(msg)
-        /* Sample code on playwright page.  Seems overcomplicated...
-           not yet sure why this is better than console.log(msg), which seems to be working fine...
-        const values = [];
-        for (const arg of msg.args())
-          values.push(await arg.jsonValue());
-        console.log(...values); */
-      });
+        
+      /* Sample code on playwright page.  
+         Achieves neater logging results than console.log(msg), esp. for warnings & errors */
+      const values = [];
+      for (const arg of msg.args())
+        values.push(await arg.jsonValue());
+      console.log(...values);
+    });
   }
 }
 
