@@ -1,6 +1,9 @@
 # aframe-e2e-testing
 An end-to-end testing framework for A-Frame, built on Playwright
 
+![image](https://user-images.githubusercontent.com/16045703/161609447-d5902145-031f-4e58-98e5-751777cb8806.png)
+
+
 [![image](https://user-images.githubusercontent.com/16045703/161606777-f3e381f9-311f-477b-a8b0-26b1442f72c6.png)](https://user-images.githubusercontent.com/16045703/161604672-6f65bfef-4e88-4c33-89c8-d28969784ff8.mp4)
 
 ## How to Run Example Tests
