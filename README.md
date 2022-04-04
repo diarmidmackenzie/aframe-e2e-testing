@@ -47,7 +47,7 @@ This repository contains a range of utility functions that are specifically help
 
 API Documentation can be found here: https://diarmidmackenzie.github.io/aframe-e2e-testing/out/
 
- 
+
 
 ### Generating the Documentation
 
