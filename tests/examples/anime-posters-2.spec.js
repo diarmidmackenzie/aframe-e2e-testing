@@ -1,6 +1,6 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
-const A = require('../../src/aframe-pw-utils.js');
+const { A } = require('aframe-e2e-testing');
 
 // Example test.
 // Timeouts between steps in the tests are primarily for the benefit of people 

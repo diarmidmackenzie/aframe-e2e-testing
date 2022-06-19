@@ -3,7 +3,7 @@ const { devices } = require('@playwright/test');
 const path = require('path');
 
 // Set up extensions to expect library.
-const extend = require('./src/expect-extensions');
+const { extend } = require('aframe-e2e-testing');
 extend.extendExpect();
 
 /**
