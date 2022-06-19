@@ -1,5 +1,11 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
+
+// This allows aframe-e2e-testing exports to be used inside arame-e2e-testing itself.
+// Not required when aframe-e2e-testing is imported as a dependency (in which case it will be 
+// accessed via node_modules).
+module.paths.push(`${module.path}/../..`)
+
 const { A } = require('aframe-e2e-testing');
 
 // Example test.
