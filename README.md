@@ -92,6 +92,12 @@ The currently recommended way to do this is to:
   git submodule add https://github.com/<username>/aframe-e2e-testing
   ```
 
+  *or* clone a specific branch like this... 
+
+  ```
+  git submodule add -b <branch> https://github.com/<username>/aframe-e2e-testing
+  ```
+
 - in the root directory of your project, run `npm install --save-dev .\aframe-e2e-testing`
 
 You should now be able to
@@ -113,15 +119,17 @@ After cloning the reposity, run:
 
 Limit your changes in the `aframe-e2e-testing` submodule to changes that you want to share upstream.  Test scripts and utilities that are specific to your project should be developed in your main repository, outside this sub-module.
 
-## Developing Scripts in a separate Repo
 
-You may wish to keep your test scripts in a separate repository from your code.
+
+## Developing Scripts in a Separate Repo
+
+You may wish to keep your test scripts in a separate repository from your product code.
 
 In this case, you *could* do this by simply forking the `aframe-e2e-testing` repo, and developing your scripts directly there.
 
 However, that will make it hard to share any updates to A-Frame Utilities upstream, as there's no clear separation between the test scripts you've developed, and any potentially re-usable updates that you have made to A-Frame Utilities.
 
-So, even if you want test scripts in a separate repository from your code.
+So, even if you want test scripts to be maintained in a separate repository from your code, it's still recommended to follow the approach described above in "Get Started", to keep project-specific code separate from re-usable code.
 
 
 
@@ -130,16 +138,6 @@ So, even if you want test scripts in a separate repository from your code.
 These example scripts include some pauses for obervability / demonstration reasons when running in headed mode, but I have been careful to put these pauses in places where the script is not dependent on them for successful execution.  In most cases it is bad practice to depend on pauses in test scripts for them to run reliably - see `expect.toReturn()` below for an alternative to pauses in test scripts.
 
 
-
-## Writing Your Own Tests
-
-For now, the best way to get started writing tests is to fork this repository (or copy the content via some other method) and use it as a basis for your own tests.  Take care to remove or modify the MIT License, if you don't want it to apply to your test scripts.
-
-Unfortunately, this will make it a little complex to merge in future enhancements made to this repository.
-
-In future I hope to make this repo available as an NPM package that can be installed, updated etc.
-
-You can base your tests on the example tests in the tests folder, in combination with the API docs for the A-Frame Utilities (see below), and the [Playwright API docs](https://playwright.dev/docs/api/class-playwright).
 
 
 
@@ -228,3 +226,11 @@ I am grateful to them for giving me permission to release these components as Op
 VR tests currently only run against Chromium.  Firefox / Webkit not yet supported for VR tests.
 
 Non-VR tests typically work against all browsers.
+
+
+
+## Problems?
+
+If you hit problems, please raise an issue [here](https://github.com/diarmidmackenzie/aframe-e2e-testing/issues).
+
+In particular, making this code available as an npm module is brand new, and there may be some teething issues in this area - so if you hit problems please do let me know & I'll try to help.
