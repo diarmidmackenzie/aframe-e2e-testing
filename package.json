@@ -1,6 +1,6 @@
 {
   "name": "aframe-e2e-testing",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "End-to-end testing framework for A-Frame",
   "main": "index.js",
   "scripts": {
