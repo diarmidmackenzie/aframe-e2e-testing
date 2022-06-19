@@ -2,8 +2,13 @@
 const { devices } = require('@playwright/test');
 const path = require('path');
 
+// This allows aframe-e2e-testing exports to be used inside arame-e2e-testing itself.
+// Not required when aframe-e2e-testng is imported as a dependency (in which case it will be 
+// accessed via node_modules)
+module.paths.push(module.path)
+
 // Set up extensions to expect library.
-const extend = require('./src/expect-extensions');
+const { extend } = require('aframe-e2e-testing');
 extend.extendExpect();
 
 /**

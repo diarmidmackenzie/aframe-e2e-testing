@@ -1,6 +1,12 @@
 // @ts-check
 const { test, expect, chromium } = require('@playwright/test');
-const A = require('../../src/aframe-pw-utils.js');
+
+// This allows aframe-e2e-testing exports to be used inside arame-e2e-testing itself.
+// Not required when aframe-e2e-testing is imported as a dependency  (in which case it will be 
+// accessed via node_modules).
+module.paths.push(`${module.path}/../..`)
+
+const { A } = require('aframe-e2e-testing');
 
 // Example test.
 // Timeouts between steps in the tests are primarily for the benefit of people 
