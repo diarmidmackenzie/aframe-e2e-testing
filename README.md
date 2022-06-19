@@ -12,7 +12,7 @@ An end-to-end testing framework for A-Frame, built on Playwright
 
 The following instructions are suitable if you have an existing project that you want to write tests for, and
 
-- You want to maintain the tests in the same repo at the project
+- You want to maintain the tests in the same repo as the project
 - You have a folder `node_modules` at the root of your project (if you don't, either create it, or use `npm init` to set it up)
 - You are happy for the test scripts to be stored in a folder names `tests` at the root of the project.
 - You don't already have a `playwright.config.js` file in your root directory.
@@ -111,7 +111,7 @@ If you do make changes to `aframe-e2e-testing`please consider submitting a PR to
 
 This repository includes some example tests, which run against various A-Frame examples.
 
-After cloning the reposity, run:
+After cloning the repository, run:
 
 `npm install`
 
